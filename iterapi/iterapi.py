@@ -2,7 +2,7 @@ import requests
 import json
 
 class Student(object):
-	"""docstring for Student"""
+	"""Student Object containing functions to retrieve various student details"""
 
 	LOGIN_URL = "http://111.93.164.90:8282/CampusPortalSOA/login"
 	STUDENTINFO_URL = "http://111.93.164.90:8282/CampusPortalSOA/studentinfo"
@@ -20,18 +20,35 @@ class Student(object):
 		self.attendance = None
 
 	def login(self):
+		"""
+		Logs in the student portal to retrieve cookies
+		
+		self.cookies
+
+		"""
 		payload = str({"username":self.regdno, "password":self.password, "MemberType":"S"})
 
 		response = requests.post(Student.LOGIN_URL, data=payload, headers=Student.HEADERS)
-		return response.cookies
+		if response.status_code == 200:
+			return response.cookies
+		else
+			print("Cannot connect to server.")
+			return None
 
 	def getInfo(self):
+		"""
+		Gets studentinfo
+
+		self.details
+
+		"""
 		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
 
 		res = json.loads(response.content)
 		self.details = res
 
 	def getPhoto(self):
+		""" Downloads Student Profile Picture """
 		response = requests.get(Student.STUDENTPHOTO_URL, data={}, headers=Student.HEADERS, cookies=self.cookies)
 		res = response.content
 		with open(self.regdno+".jpg", "wb") as image:
@@ -39,6 +56,12 @@ class Student(object):
 		
 
 	def getAttendance(self):
+		"""
+		Gets current Attendance 
+
+		self.attendance
+
+		"""
 		payload = str({"registerationid": "ITERRETD1711A0000002"})
 		response = requests.get(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
 		res = json.loads(response.content)

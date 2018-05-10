@@ -13,7 +13,7 @@ def readme():
 
 setup(
     name='iterapi',
-    version='1.0.2', 
+    version='1.0.4', 
     description='Python API to student portal of ITER',
 
     long_description=readme(),  
@@ -21,8 +21,10 @@ setup(
 
     url='https://github.com/SubhrajitPrusty/iterapi',  
     author='Subhrajit Prusty',  
-    author_email='subhrajit1997@gmail.com',  
+    author_email='subhrajit1997@gmail.com',
 
+    setup_requires=['setuptools>=38.6.0'],
+    
     classifiers=[  
         'Development Status :: 4 - Beta',
 

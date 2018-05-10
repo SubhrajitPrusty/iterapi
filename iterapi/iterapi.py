@@ -31,7 +31,7 @@ class Student(object):
 		response = requests.post(Student.LOGIN_URL, data=payload, headers=Student.HEADERS)
 		if response.status_code == 200:
 			return response.cookies
-		else
+		else:
 			print("Cannot connect to server.")
 			return None
 

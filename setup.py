@@ -13,7 +13,7 @@ def readme():
 
 setup(
     name='iterapi',
-    version='1.0.4', 
+    version='1.0.6', 
     description='Python API to student portal of ITER',
 
     long_description=readme(),  

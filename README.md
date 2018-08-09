@@ -10,7 +10,7 @@ Python API to student portal of ITER
 ```python
 import iterapi
 
-st = Student('regdno','password')
+st = iterapi.Student('regdno','password')
 st.getInfo() # returns json element
 st.getPhoto() # writes photo as registration_no.jpg
 st.getAttendance() # returns json element

@@ -63,6 +63,6 @@ class Student(object):
 
 		"""
 		payload = str({"registerationid": "ITERRETD1806A0000001"})
-		response = requests.get(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
+		response = requests.post(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
 		res = json.loads(response.content)
 		self.attendance = res

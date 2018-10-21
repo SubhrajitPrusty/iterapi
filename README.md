@@ -27,11 +27,11 @@ st.getAttendance() # returns json element
 print(st.details, st.attendance)  # Print student details and attendance on console
 ```
 
-[ico-lang]: https://img.shields.io/github/languages/top/SubhrajitPrusty/iterapi.svg?style=flat-square
-[ico-version]: https://img.shields.io/pypi/v/iterapi.svg?style=flat-square
-[ico-licence]: https://img.shields.io/pypi/l/iterapi.svg?style=flat-square
-[ico-format]: https://img.shields.io/pypi/format/iterapi.svg?style=flat-square
-[ico-status]: https://img.shields.io/pypi/status/iterapi.svg?style=flat-square
+[ico-lang]: https://img.shields.io/github/languages/top/SubhrajitPrusty/iterapi.svg?style=for-the-badge
+[ico-version]: https://img.shields.io/pypi/v/iterapi.svg?style=for-the-badge
+[ico-licence]: https://img.shields.io/pypi/l/iterapi.svg?style=for-the-badge
+[ico-format]: https://img.shields.io/pypi/format/iterapi.svg?style=for-the-badge
+[ico-status]: https://img.shields.io/pypi/status/iterapi.svg?style=for-the-badge
 
 [link-github]: https://github.com/SubhrajitPrusty/iterapi
 [link-pypi]: https://pypi.org/project/iterapi

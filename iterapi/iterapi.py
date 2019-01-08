@@ -32,7 +32,7 @@ class Student(object):
 		if response.status_code == 200:
 			return response.cookies
 		else:
-			print("Cannot connect to server.")
+			print("Cannot connect to server.", response)
 			return None
 
 	def getInfo(self):
@@ -45,14 +45,26 @@ class Student(object):
 		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
 
 		res = json.loads(response.content)
-		self.details = res
+		
+		if response.status_code == 200:
+			self.details = json.loads(response.content)
+			return self.details
+		else:
+			print("Cannot connect to server.", response)
+			return None
 
 	def getPhoto(self):
 		""" Downloads Student Profile Picture """
 		response = requests.get(Student.STUDENTPHOTO_URL, data={}, headers=Student.HEADERS, cookies=self.cookies)
 		res = response.content
-		with open(self.regdno+".jpg", "wb") as image:
-			image.write(res)
+
+		if self.cookies:
+			if response.status_code == 200:
+				with open(self.regdno+".jpg", "wb") as image:
+					image.write(res)
+		else:
+			print("Cannot connect to server.", response)
+			return None
 		
 
 	def getAttendance(self):
@@ -62,7 +74,12 @@ class Student(object):
 		self.attendance
 
 		"""
-		payload = str({"registerationid": "ITERRETD1806A0000001"})
+		payload = str({"registerationid": "ITERRETD1810A0000001"})
 		response = requests.post(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
-		res = json.loads(response.content)
-		self.attendance = res
+
+		if response.status_code == 200:
+			self.attendance = json.loads(response.content)
+			return self.attendance
+		else:
+			print("Cannot connect to server.", response)
+			return None

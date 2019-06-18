@@ -1,13 +1,12 @@
 import requests
-import json
 
 class Student(object):
 	"""Student Object containing functions to retrieve various student details"""
 
-	LOGIN_URL = "http://111.93.164.90:8282/CampusPortalSOA/login"
-	STUDENTINFO_URL = "http://111.93.164.90:8282/CampusPortalSOA/studentinfo"
-	STUDENTPHOTO_URL = "http://111.93.164.90:8282/CampusPortalSOA/image/studentPhoto"
-	ATTENDANCE_URL = "http://111.93.164.90:8282/CampusPortalSOA/attendanceinfo"
+	LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
+	STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
+	STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"
+	ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
 
 	HEADERS = {"Content-Type" : "application/json"}
 
@@ -44,10 +43,10 @@ class Student(object):
 		"""
 		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
 
-		res = json.loads(response.content)
+		res = response.json()
 		
 		if response.status_code == 200:
-			self.details = json.loads(response.content)
+			self.details = response.json()
 			return self.details
 		else:
 			print("Cannot connect to server.", response)
@@ -78,7 +77,7 @@ class Student(object):
 		response = requests.post(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
 
 		if response.status_code == 200:
-			self.attendance = json.loads(response.content)
+			self.attendance = response.json()
 			return self.attendance
 		else:
 			print("Cannot connect to server.", response)

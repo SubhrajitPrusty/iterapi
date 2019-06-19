@@ -37,7 +37,7 @@ st.getDetailedResult(sem_no) # returns a dictionary containing details of a seme
 [ico-licence]: https://img.shields.io/pypi/l/iterapi.svg?style=for-the-badge
 [ico-format]: https://img.shields.io/pypi/format/iterapi.svg?style=for-the-badge
 [ico-status]: https://img.shields.io/pypi/status/iterapi.svg?style=for-the-badge
-[ico-build]: https://img.shields.io/travis/SubhrajitPrusty/iterapi.svg
+[ico-build]: https://img.shields.io/travis/SubhrajitPrusty/iterapi.svg?style=for-the-badge
 
 [link-github]: https://github.com/SubhrajitPrusty/iterapi
 [link-pypi]: https://pypi.org/project/iterapi

@@ -19,6 +19,7 @@ class Student(object):
 		self.cookies = self.login()
 		self.details = None
 		self.attendance = None
+		self.img_path = None
 		self.results = None
 		self.resultDetail = dict()
 
@@ -26,7 +27,7 @@ class Student(object):
 		"""
 		Logs in the student portal to retrieve cookies
 		
-		self.cookies
+		self.cookies -> request.Response.cookies
 
 		"""
 		payload = str({"username":self.regdno, "password":self.password, "MemberType":"S"})
@@ -35,14 +36,14 @@ class Student(object):
 		if response.status_code == 200:
 			return response.cookies
 		else:
-			print("Cannot connect to server.", response)
+			print("Error: " ,response.status_code)
 			return None
 
 	def getInfo(self):
 		"""
 		Gets studentinfo
 
-		self.details
+		self.details -> dict()
 
 		"""
 		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
@@ -53,31 +54,34 @@ class Student(object):
 			self.details = response.json()
 			return self.details
 		else:
-			print("Cannot connect to server.", response)
+			print("Error: " ,response.status_code)
 			return None
 
 	def getPhoto(self):
-		""" Downloads Student Profile Picture """
+		""" 
+		Downloads Student Profile Picture
+		
+		self.img_path -> str # Path to the image written
+
+		"""
 		response = requests.get(Student.STUDENTPHOTO_URL, data={}, headers=Student.HEADERS, cookies=self.cookies)
 		res = response.content
 
-		if self.cookies:
-			if response.status_code == 200:
-				img_path = self.regdno+".jpg"
-				with open(img_path, "wb+") as image:
-					image.write(res)
-					print("File written to {}".format(img_path))
-					return True
-		else:
-			print("Cannot connect to server.", response)
+		if response.content == None:
+			print("Error: ", response.status_code)
 			return None
-		
+		else:
+			self.img_path = self.regdno+".jpg"
+			with open(self.img_path, "wb+") as image:
+				image.write(res)
+				print("File written to {}".format(self.img_path))
+				return self.img_path
 
 	def getAttendance(self):
 		"""
 		Gets current Attendance 
 
-		self.attendance
+		self.attendance -> dict()
 
 		"""
 		payload = str({"registerationid": "ITERRETD1810A0000001"})
@@ -87,14 +91,15 @@ class Student(object):
 			self.attendance = response.json()
 			return self.attendance
 		else:
-			print("Cannot connect to server.", response)
+			print("Error: ", response.status_code)
 			return None
 
 	def getResult(self):
 		"""
 		Gets results
 
-		self.result
+		self.result -> dict()
+
 		"""
 
 		payload = "{}"
@@ -104,12 +109,15 @@ class Student(object):
 			self.results = response.json()
 			return self.results
 		else:
-			print("Cannot fetch results.", response)
+			print("Cannot fetch results.", response.status_code)
 			return None
 
 	def getDetailedResult(self, sem):
 		"""
 		Gets result details of a semester
+
+		Stored in self.resultDetail[sem] -> dict()
+
 		"""
 
 		payload = {"styno" : str(sem)}
@@ -120,7 +128,7 @@ class Student(object):
 			self.resultDetail[sem] = response.json()
 			return self.resultDetail[sem]
 		else:
-			print("Cannot fetch results.", response)
+			print("Cannot fetch results.", response.status_code)
 			return None
 
 

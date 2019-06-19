@@ -5,6 +5,8 @@ python:
   - "3.6"
 install:
   - pip install -e .
+script:
+  - python --version
 deploy:
   provider: pypi
   user: subhrajitpy

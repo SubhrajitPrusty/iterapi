@@ -63,8 +63,11 @@ class Student(object):
 
 		if self.cookies:
 			if response.status_code == 200:
-				with open(self.regdno+".jpg", "wb") as image:
+				img_path = self.regdno+".jpg"
+				with open(img_path, "wb+") as image:
 					image.write(res)
+					print("File written to {}".format(img_path))
+					return True
 		else:
 			print("Cannot connect to server.", response)
 			return None

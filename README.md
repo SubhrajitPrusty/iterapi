@@ -23,6 +23,8 @@ st = iterapi.Student('regdno','password') # Login to the portal
 st.getInfo() # returns json element
 st.getPhoto() # writes photo as registration_no.jpg
 st.getAttendance() # returns json element
+st.getResults() # returns results
+st.getDetailedResult(sem_no) # return details of a semester result
 
 print(st.details, st.attendance)  # Print student details and attendance on console
 ```

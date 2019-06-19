@@ -9,22 +9,25 @@ Python API to Student's Campus portal of ITER
 
 ## Installation
 
-Open your terminal and type `pip install iterapi` or `pip3 install iterapi`
+`pip install iterapi`
+
+or
+
+`pip3 install iterapi`
 
 ## Usage
 
-Type following command in console to
+Example
 
 ```python
-# Imports the library
-import iterapi
+from iterapi import Student
 
-st = iterapi.Student('regdno','password') # Login to the portal
-st.getInfo() # returns json element
+st = Student('regdno','password') # Login to the portal
+st.getInfo() # returns a dictionary containing student details
 st.getPhoto() # writes photo as registration_no.jpg
-st.getAttendance() # returns json element
-st.getResults() # returns results
-st.getDetailedResult(sem_no) # return details of a semester result
+st.getAttendance() # returns a dictionary containing attendance
+st.getResults() # returns a dictionary containing results
+st.getDetailedResult(sem_no) # returns a dictionary containing details of a semester result
 
 print(st.details, st.attendance)  # Print student details and attendance on console
 ```

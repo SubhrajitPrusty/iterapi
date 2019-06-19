@@ -6,6 +6,7 @@ Python API to Student's Campus portal of ITER
 [![Latest Version][ico-version]][link-pypi]
 [![Format][ico-format]][link-pypi]
 [![Status][ico-status]][link-pypi]
+[![Build][ico-build]][link-pypi]
 
 ## Installation
 
@@ -29,7 +30,6 @@ st.getAttendance() # returns a dictionary containing attendance
 st.getResults() # returns a dictionary containing results
 st.getDetailedResult(sem_no) # returns a dictionary containing details of a semester result
 
-print(st.details, st.attendance)  # Print student details and attendance on console
 ```
 
 [ico-lang]: https://img.shields.io/github/languages/top/SubhrajitPrusty/iterapi.svg?style=for-the-badge
@@ -37,6 +37,7 @@ print(st.details, st.attendance)  # Print student details and attendance on cons
 [ico-licence]: https://img.shields.io/pypi/l/iterapi.svg?style=for-the-badge
 [ico-format]: https://img.shields.io/pypi/format/iterapi.svg?style=for-the-badge
 [ico-status]: https://img.shields.io/pypi/status/iterapi.svg?style=for-the-badge
+[ico-build]: https://img.shields.io/travis/SubhrajitPrusty/iterapi.svg
 
 [link-github]: https://github.com/SubhrajitPrusty/iterapi
 [link-pypi]: https://pypi.org/project/iterapi

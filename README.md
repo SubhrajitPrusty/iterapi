@@ -1,4 +1,7 @@
 # iterapi
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d6b9777b89734315bb18d35b50b537a9)](https://app.codacy.com/manual/SubhrajitPrusty/iterapi?utm_source=github.com&utm_medium=referral&utm_content=SubhrajitPrusty/iterapi&utm_campaign=Badge_Grade_Dashboard)
+
 Python API to Student's Campus portal of ITER
 
 [![GitHub top language][ico-lang]][link-github]

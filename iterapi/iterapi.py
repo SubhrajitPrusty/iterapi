@@ -47,8 +47,6 @@ class Student(object):
 
 		"""
 		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
-
-		res = response.json()
 		
 		if response.status_code == 200:
 			self.details = response.json()
@@ -67,7 +65,7 @@ class Student(object):
 		response = requests.get(Student.STUDENTPHOTO_URL, data={}, headers=Student.HEADERS, cookies=self.cookies)
 		res = response.content
 
-		if response.content == None:
+		if response.content is None:
 			print("Error: ", response.status_code)
 			return None
 		else:

@@ -84,7 +84,7 @@ class Student(object):
 		self.attendance -> dict()
 
 		"""
-		payload = str({"registerationid": "ITERRETD1907A0000002"})
+		payload = str({"registerationid": "ITERRETD2001A0000001"})
 		response = requests.post(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
 
 		if response.status_code == 200:

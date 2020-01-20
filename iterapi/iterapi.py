@@ -34,7 +34,11 @@ class Student(object):
 
 		response = requests.post(Student.LOGIN_URL, data=payload, headers=Student.HEADERS)
 		if response.status_code == 200:
-			return response.cookies
+			if "login successful" in response.json()['message'].lower():
+				return response.cookies
+			else:
+				print('Invalid username or password')
+				raise Exception('Invalid username or password')
 		else:
 			print("Error: " ,response.status_code)
 			return None
@@ -123,7 +127,14 @@ class Student(object):
 		response = requests.post(Student.RESULTDETAIL_URL, data=str(payload), headers=Student.HEADERS, cookies=self.cookies)
 		
 		if response.status_code == 200:
-			self.resultDetail[sem] = response.json()
+			try:
+				self.resultDetail[sem] = response.json()
+			except Exception as e:
+				if type(e).__name__ == "JSONDecodeError":
+					print("Invalid Semester")
+					exit(1)
+				else:
+					raise e
 			return self.resultDetail[sem]
 		else:
 			print("Cannot fetch results.", response.status_code)

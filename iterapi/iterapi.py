@@ -100,7 +100,7 @@ class Student(object):
 		"""
 		Gets results
 
-		self.result -> dict()
+		self.results -> dict()
 
 		"""
 

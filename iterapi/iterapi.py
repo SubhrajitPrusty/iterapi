@@ -154,7 +154,7 @@ class Student(object):
 
 		if response.status_code == 200:
 			try:
-				self.result_path= self.regdno+".pdf"
+				self.result_path= self.regdno+"_sem"+str(sem)+".pdf"
 				with open(self.result_path, 'wb') as f:
 					f.write(response.content)
 			except Exception as e:

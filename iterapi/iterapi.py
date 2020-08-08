@@ -21,6 +21,7 @@ class Student(object):
 		self.details = None
 		self.attendance = None
 		self.img_path = None
+		self.result_path=None
 		self.results = None
 		self.resultDetail = dict()
 
@@ -153,7 +154,9 @@ class Student(object):
 
 		if response.status_code == 200:
 			try:
-				print("Result for sem:"+str(sem)+" downloaded as response.pdf");
+				self.result_path= self.regdno+".pdf"
+				with open(self.result_path, 'wb') as f:
+					f.write(response.content)
 			except Exception as e:
 				if type(e).__name__ == "JSONDecodeError":
 					print("Invalid Semester")
@@ -162,7 +165,7 @@ class Student(object):
 					raise e
 		else:
 			print("Cannot fetch Results for semester:"+str(sem)+".",response.status_code)
-			return None
+		return None
 
 
 

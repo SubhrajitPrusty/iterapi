@@ -10,3 +10,4 @@ __pycache__/
 *~
 *.jpg
 .idea/
+*.pdf

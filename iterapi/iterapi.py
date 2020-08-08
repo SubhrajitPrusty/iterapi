@@ -142,7 +142,7 @@ class Student(object):
 			print("Cannot fetch results.", response.status_code)
 			return None
 
-	def downloadResult(self,sem):
+	def downloadSemResult(self,sem):
 		"""
 		Gets result pdf downloaded
 

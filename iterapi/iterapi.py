@@ -2,16 +2,18 @@ import requests
 
 
 class Student(object):
-    """Student Object containing functions to retrieve various student details"""
+    """
+    Student Object containing functions to retrieve various student details
+    """
 
     LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
     STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
-    STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"
+    STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"  # noqa: E501
     STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
     # styno = int(1-8) semester number
     RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl"
     ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
-    RESULTDOWNLOAD_URL = "http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"
+    RESULTDOWNLOAD_URL = "http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"  # noqa: E501
 
     HEADERS = {"Content-Type": "application/json"}
 

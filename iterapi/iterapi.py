@@ -1,171 +1,200 @@
 import requests
 
+
 class Student(object):
-	"""Student Object containing functions to retrieve various student details"""
+    """Student Object containing functions to retrieve various student details"""
 
-	LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
-	STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
-	STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"
-	STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
-	RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl" # styno = int(1-8) semester number
-	ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
-	RESULTDOWNLOAD_URL="http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"
+    LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
+    STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
+    STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"
+    STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
+    # styno = int(1-8) semester number
+    RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl"
+    ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
+    RESULTDOWNLOAD_URL = "http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"
 
-	HEADERS = {"Content-Type" : "application/json"}
+    HEADERS = {"Content-Type": "application/json"}
 
-	def __init__(self, regdno, password):
-		super(Student, self).__init__()
-		self.regdno = regdno
-		self.password = password
-		self.cookies = self.login()
-		self.details = None
-		self.attendance = None
-		self.img_path = None
-		self.result_path=None
-		self.results = None
-		self.resultDetail = dict()
+    def __init__(self, regdno, password):
+        super(Student, self).__init__()
+        self.regdno = regdno
+        self.password = password
+        self.cookies = self.login()
+        self.details = None
+        self.attendance = None
+        self.img_path = None
+        self.result_path = None
+        self.results = None
+        self.resultDetail = dict()
 
-	def login(self):
-		"""
-		Logs in the student portal to retrieve cookies
-		
-		self.cookies -> request.Response.cookies
+    def login(self):
+        """
+        Logs in the student portal to retrieve cookies
 
-		"""
-		payload = str({"username":self.regdno, "password":self.password, "MemberType":"S"})
+        self.cookies -> request.Response.cookies
 
-		response = requests.post(Student.LOGIN_URL, data=payload, headers=Student.HEADERS)
-		if response.status_code == 200:
-			if "login successful" in response.json()['message'].lower():
-				return response.cookies
-			else:
-				print('Invalid username or password')
-				raise Exception('Invalid username or password')
-		else:
-			print("Error: " ,response.status_code)
-			return None
+        """
+        payload = str({"username": self.regdno,
+                       "password": self.password,
+                       "MemberType": "S"})
 
-	def getInfo(self):
-		"""
-		Gets studentinfo
+        response = requests.post(
+            Student.LOGIN_URL,
+            data=payload,
+            headers=Student.HEADERS)
+        if response.status_code == 200:
+            if "login successful" in response.json()['message'].lower():
+                return response.cookies
+            else:
+                print('Invalid username or password')
+                raise Exception('Invalid username or password')
+        else:
+            print("Error: ", response.status_code)
+            return None
 
-		self.details -> dict()
+    def getInfo(self):
+        """
+        Gets studentinfo
 
-		"""
-		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)#login
-		
-		if response.status_code == 200:
-			self.details = response.json()
-			return self.details
-		else:
-			print("Error: " ,response.status_code)
-			return None
+        self.details -> dict()
 
-	def getPhoto(self):
-		""" 
-		Downloads Student Profile Picture
-		
-		self.img_path -> str # Path to the image written
+        """
+        response = requests.post(
+            Student.STUDENTINFO_URL,
+            data={},
+            headers=Student.HEADERS,
+            cookies=self.cookies)  # login
 
-		"""
-		response = requests.get(Student.STUDENTPHOTO_URL, data={}, headers=Student.HEADERS, cookies=self.cookies)
-		res = response.content
+        if response.status_code == 200:
+            self.details = response.json()
+            return self.details
+        else:
+            print("Error: ", response.status_code)
+            return None
 
-		if response.content is None:
-			print("Error: ", response.status_code)
-			return None
-		else:
-			self.img_path = self.regdno+".jpg"
-			with open(self.img_path, "wb+") as image:
-				image.write(res)
-				print("File written to {}".format(self.img_path))
-				return self.img_path
+    def getPhoto(self):
+        """
+        Downloads Student Profile Picture
 
-	def getAttendance(self):
-		"""
-		Gets current Attendance 
+        self.img_path -> str # Path to the image written
 
-		self.attendance -> dict()
+        """
+        response = requests.get(
+            Student.STUDENTPHOTO_URL,
+            data={},
+            headers=Student.HEADERS,
+            cookies=self.cookies)
+        res = response.content
 
-		"""
-		payload = str({"registerationid": "ITERRETD2001A0000001"})
-		response = requests.post(Student.ATTENDANCE_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
+        if response.content is None:
+            print("Error: ", response.status_code)
+            return None
+        else:
+            self.img_path = self.regdno + ".jpg"
+            with open(self.img_path, "wb+") as image:
+                image.write(res)
+                print("File written to {}".format(self.img_path))
+                return self.img_path
 
-		if response.status_code == 200:
-			self.attendance = response.json()
-			return self.attendance
-		else:
-			print("Error: ", response.status_code)
-			return None
+    def getAttendance(self):
+        """
+        Gets current Attendance
 
-	def getResult(self):
-		"""
-		Gets results
+        self.attendance -> dict()
 
-		self.results -> dict()
+        """
+        payload = str({"registerationid": "ITERRETD2001A0000001"})
+        response = requests.post(
+            Student.ATTENDANCE_URL,
+            data=payload,
+            headers=Student.HEADERS,
+            cookies=self.cookies)
 
-		"""
+        if response.status_code == 200:
+            self.attendance = response.json()
+            return self.attendance
+        else:
+            print("Error: ", response.status_code)
+            return None
 
-		payload = "{}"
-		response = requests.post(Student.STUDENTRESULT_URL, data=payload, headers=Student.HEADERS, cookies=self.cookies)
+    def getResult(self):
+        """
+        Gets results
 
-		if response.status_code == 200:
-			self.results = response.json()
-			return self.results
-		else:
-			print("Cannot fetch results.", response.status_code)
-			return None
+        self.results -> dict()
 
-	def getDetailedResult(self, sem):
-		"""
-		Gets result details of a semester
+        """
 
-		Stored in self.resultDetail[sem] -> dict()
+        payload = "{}"
+        response = requests.post(
+            Student.STUDENTRESULT_URL,
+            data=payload,
+            headers=Student.HEADERS,
+            cookies=self.cookies)
 
-		"""
+        if response.status_code == 200:
+            self.results = response.json()
+            return self.results
+        else:
+            print("Cannot fetch results.", response.status_code)
+            return None
 
-		payload = {"styno" : str(sem)}
+    def getDetailedResult(self, sem):
+        """
+        Gets result details of a semester
 
-		response = requests.post(Student.RESULTDETAIL_URL, data=str(payload), headers=Student.HEADERS, cookies=self.cookies)
-		
-		if response.status_code == 200:
-			try:
-				self.resultDetail[sem] = response.json()
-			except Exception as e:
-				if type(e).__name__ == "JSONDecodeError":
-					print("Invalid Semester")
-					exit(1)
-				else:
-					raise e
-			return self.resultDetail[sem]
-		else:
-			print("Cannot fetch results.", response.status_code)
-			return None
+        Stored in self.resultDetail[sem] -> dict()
 
-	def downloadSemResult(self,sem):
-		"""
-		Gets result pdf downloaded
+        """
 
-		self.result_path-> str # path to the store the Result pdf
-		"""
-		payload = {"stynumber": str(sem), "publish": "Y"}
+        payload = {"styno": str(sem)}
 
-		response = requests.post(Student.RESULTDOWNLOAD_URL, data=str(payload), headers=Student.HEADERS, cookies= self.cookies)
+        response = requests.post(
+            Student.RESULTDETAIL_URL,
+            data=str(payload),
+            headers=Student.HEADERS,
+            cookies=self.cookies)
 
-		if response.status_code == 200:
-			try:
-				self.result_path= self.regdno+"_sem_"+str(sem)+".pdf"
-				with open(self.result_path, 'wb') as f:
-					f.write(response.content)
-			except Exception as e:
-				if type(e).__name__ == "JSONDecodeError":
-					print("Invalid Semester")
-					exit(1)
-				else:
-					raise e
-		else:
-			print("Cannot fetch Results for semester:"+str(sem)+".",response.status_code)
-		return None
+        if response.status_code == 200:
+            try:
+                self.resultDetail[sem] = response.json()
+            except Exception as e:
+                if type(e).__name__ == "JSONDecodeError":
+                    print("Invalid Semester")
+                    exit(1)
+                else:
+                    raise e
+            return self.resultDetail[sem]
+        else:
+            print("Cannot fetch results.", response.status_code)
+            return None
 
+    def downloadSemResult(self, sem):
+        """
+        Gets result pdf downloaded
 
+        self.result_path-> str # path to the store the Result pdf
+        """
+        payload = {"stynumber": str(sem), "publish": "Y"}
 
+        response = requests.post(
+            Student.RESULTDOWNLOAD_URL,
+            data=str(payload),
+            headers=Student.HEADERS,
+            cookies=self.cookies)
+
+        if response.status_code == 200:
+            try:
+                self.result_path = self.regdno + "_sem_" + str(sem) + ".pdf"
+                with open(self.result_path, 'wb') as f:
+                    f.write(response.content)
+            except Exception as e:
+                if type(e).__name__ == "JSONDecodeError":
+                    print("Invalid Semester")
+                    exit(1)
+                else:
+                    raise e
+        else:
+            print("Cannot fetch Results for semester:" +
+                  str(sem) + ".", response.status_code)
+        return None

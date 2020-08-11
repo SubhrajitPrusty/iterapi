@@ -9,6 +9,7 @@ class Student(object):
 	STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
 	RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl" # styno = int(1-8) semester number
 	ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
+	RESULTDOWNLOAD_URL="http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"
 
 	HEADERS = {"Content-Type" : "application/json"}
 
@@ -20,6 +21,7 @@ class Student(object):
 		self.details = None
 		self.attendance = None
 		self.img_path = None
+		self.result_path=None
 		self.results = None
 		self.resultDetail = dict()
 
@@ -50,7 +52,7 @@ class Student(object):
 		self.details -> dict()
 
 		"""
-		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)
+		response = requests.post(Student.STUDENTINFO_URL,data={},headers=Student.HEADERS, cookies=self.cookies)#login
 		
 		if response.status_code == 200:
 			self.details = response.json()
@@ -139,5 +141,31 @@ class Student(object):
 		else:
 			print("Cannot fetch results.", response.status_code)
 			return None
+
+	def downloadSemResult(self,sem):
+		"""
+		Gets result pdf downloaded
+
+		self.result_path-> str # path to the store the Result pdf
+		"""
+		payload = {"stynumber": str(sem), "publish": "Y"}
+
+		response = requests.post(Student.RESULTDOWNLOAD_URL, data=str(payload), headers=Student.HEADERS, cookies= self.cookies)
+
+		if response.status_code == 200:
+			try:
+				self.result_path= self.regdno+"_sem_"+str(sem)+".pdf"
+				with open(self.result_path, 'wb') as f:
+					f.write(response.content)
+			except Exception as e:
+				if type(e).__name__ == "JSONDecodeError":
+					print("Invalid Semester")
+					exit(1)
+				else:
+					raise e
+		else:
+			print("Cannot fetch Results for semester:"+str(sem)+".",response.status_code)
+		return None
+
 
 

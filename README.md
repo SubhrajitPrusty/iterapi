@@ -29,6 +29,7 @@ st.getPhoto() # writes photo as registration_no.jpg
 st.getAttendance() # returns a dictionary containing attendance
 st.getResults() # returns a dictionary containing results
 st.getDetailedResult(sem_no) # returns a dictionary containing details of a semester result
+st.downloadSemResult(sem_no) # writes result document as registrationno_sem_no.pdf
 
 ```
 

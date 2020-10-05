@@ -1,5 +1,5 @@
 import requests
-
+from json.decoder import JSONDecodeError
 
 class Student(object):
     """
@@ -8,12 +8,14 @@ class Student(object):
 
     LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
     STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
+    REGISTERID_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentSemester/lov"
     STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"  # noqa: E501
     STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
     # styno = int(1-8) semester number
     RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl"
     ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
     RESULTDOWNLOAD_URL = "http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"  # noqa: E501
+
 
     HEADERS = {"Content-Type": "application/json"}
 
@@ -22,6 +24,7 @@ class Student(object):
         self.regdno = regdno
         self.password = password
         self.cookies = self.login()
+        self.registerationid = self.getRegisterationId()
         self.details = None
         self.attendance = None
         self.img_path = None
@@ -53,6 +56,20 @@ class Student(object):
         else:
             print("Error: ", response.status_code)
             return None
+
+    def getRegisterationId(self):
+        if self.cookies:
+            response = requests.post(
+                Student.REGISTERID_URL,
+                data={},
+                cookies=self.cookies).json()
+            try:
+                return response["studentdata"][0].get("REGISTRATIONID")
+            except:
+                return None
+        else:
+            print('User is not logged in')
+            raise Exception('User is not logged in')
 
     def getInfo(self):
         """
@@ -105,7 +122,7 @@ class Student(object):
         self.attendance -> dict()
 
         """
-        payload = str({"registerationid": "ITERRETD2001A0000001"})
+        payload = str({"registerationid": self.registerationid})
         response = requests.post(
             Student.ATTENDANCE_URL,
             data=payload,
@@ -160,12 +177,11 @@ class Student(object):
         if response.status_code == 200:
             try:
                 self.resultDetail[sem] = response.json()
+            except JSONDecodeError:
+                print("Invalid Semester")
+                raise Exception("Invalid Semester")
             except Exception as e:
-                if type(e).__name__ == "JSONDecodeError":
-                    print("Invalid Semester")
-                    exit(1)
-                else:
-                    raise e
+                raise e
             return self.resultDetail[sem]
         else:
             print("Cannot fetch results.", response.status_code)
@@ -190,12 +206,11 @@ class Student(object):
                 self.result_path = self.regdno + "_sem_" + str(sem) + ".pdf"
                 with open(self.result_path, 'wb') as f:
                     f.write(response.content)
+            except JSONDecodeError:
+                print("Invalid Semester")
+                raise Exception("Invalid Semester")
             except Exception as e:
-                if type(e).__name__ == "JSONDecodeError":
-                    print("Invalid Semester")
-                    exit(1)
-                else:
-                    raise e
+                raise e
         else:
             print("Cannot fetch Results for semester:" +
                   str(sem) + ".", response.status_code)

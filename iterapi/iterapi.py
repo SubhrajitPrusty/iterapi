@@ -1,6 +1,7 @@
 import requests
 from json.decoder import JSONDecodeError
 
+
 class Student(object):
     """
     Student Object containing functions to retrieve various student details
@@ -65,8 +66,8 @@ class Student(object):
                 cookies=self.cookies).json()
             try:
                 return response["studentdata"][0].get("REGISTRATIONID")
-            except:
-                return None
+            except Exception as e:
+                raise e
         else:
             print('User is not logged in')
             raise Exception('User is not logged in')

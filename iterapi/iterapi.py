@@ -60,7 +60,7 @@ class Student(object):
     def getRegisterationId(self):
         if self.cookies:
             response = requests.post(
-                Student.REGISTERID_URL,
+                Student.REGID_URL,
                 data={},
                 cookies=self.cookies).json()
             try:

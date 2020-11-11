@@ -58,6 +58,12 @@ class Student(object):
             return None
 
     def getRegisterationId(self):
+        """
+        Get Registration ID for current semester
+
+        self.registerationid -> str
+
+        """
         if self.cookies:
             response = requests.post(
                 Student.REGID_URL,
@@ -185,6 +191,28 @@ class Student(object):
             return self.resultDetail[sem]
         else:
             print("Cannot fetch results.", response.status_code)
+            return None
+
+    def updatePassword(self, new_password):
+        """
+        Updates the current password to the given password
+
+        """
+        payload = {
+            "newpassword": new_password,
+            "confirmpassword": new_password
+            }
+
+        response = requests.post(
+            Student.LOGIN_URL,
+            data=str(payload),
+            headers=Student.HEADERS,
+            cookies=self.cookies)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Error: ", response.status_code)
             return None
 
     def downloadSemResult(self, sem):

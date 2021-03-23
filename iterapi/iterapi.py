@@ -7,15 +7,16 @@ class Student(object):
     Student Object containing functions to retrieve various student details
     """
 
-    LOGIN_URL = "http://136.233.14.3:8282/CampusPortalSOA/login"
-    STUDENTINFO_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentinfo"
-    REGID_URL = "http://136.233.14.3:8282/CampusPortalSOA/studentSemester/lov"
-    STUDENTPHOTO_URL = "http://136.233.14.3:8282/CampusPortalSOA/image/studentPhoto"  # noqa: E501
-    STUDENTRESULT_URL = "http://136.233.14.3:8282/CampusPortalSOA/stdrst"
+    DOMAIN = "http://103.112.27.37:8282"
+    LOGIN_URL = DOMAIN+"/CampusPortalSOA/login"
+    STUDENTINFO_URL = DOMAIN+"/CampusPortalSOA/studentinfo"
+    REGID_URL = DOMAIN+"/CampusPortalSOA/studentSemester/lov"
+    STUDENTPHOTO_URL = DOMAIN+"/CampusPortalSOA/image/studentPhoto"  # noqa: E501
+    STUDENTRESULT_URL = DOMAIN+"/CampusPortalSOA/stdrst"
     # styno = int(1-8) semester number
-    RESULTDETAIL_URL = "http://136.233.14.3:8282/CampusPortalSOA/rstdtl"
-    ATTENDANCE_URL = "http://136.233.14.3:8282/CampusPortalSOA/attendanceinfo"
-    RESULTDOWNLOAD_URL = "http://136.233.14.3:8282/CampusPortalSOA/downresultpdf"  # noqa: E501
+    RESULTDETAIL_URL = DOMAIN+"/CampusPortalSOA/rstdtl"
+    ATTENDANCE_URL = DOMAIN+"/CampusPortalSOA/attendanceinfo"
+    RESULTDOWNLOAD_URL = DOMAIN+"/CampusPortalSOA/downresultpdf"  # noqa: E501
 
     HEADERS = {"Content-Type": "application/json"}
 
@@ -201,7 +202,7 @@ class Student(object):
         payload = {
             "newpassword": new_password,
             "confirmpassword": new_password
-            }
+        }
 
         response = requests.post(
             Student.LOGIN_URL,

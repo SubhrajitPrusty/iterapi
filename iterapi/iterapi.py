@@ -25,13 +25,16 @@ class Student(object):
         self.regdno = regdno
         self.password = password
         self.cookies = self.login()
-        self.registerationid = self.getRegisterationId()
         self.details = None
         self.attendance = None
         self.img_path = None
         self.result_path = None
         self.results = None
-        self.resultDetail = dict()
+        self.resultDetail = {}
+        try:
+            self.registerationid = self.getRegisterationId()
+        except Exception:
+            self.registerationid = None
 
     def login(self):
         """
@@ -129,6 +132,8 @@ class Student(object):
         self.attendance -> dict()
 
         """
+        if not self.registerationid:
+            return []
         payload = str({"registerationid": self.registerationid})
         response = requests.post(
             Student.ATTENDANCE_URL,

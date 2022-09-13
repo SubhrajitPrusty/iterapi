@@ -1,1 +1,1 @@
-from .iterapi import Student
+from .iterapi import Student  # noqa: F401

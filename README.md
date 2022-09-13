@@ -27,8 +27,9 @@ st = Student('regdno','password') # Login to the portal
 st.getInfo() # returns a dictionary containing student details
 st.getPhoto() # writes photo as registration_no.jpg
 st.getAttendance() # returns a dictionary containing attendance
-st.getResults() # returns a dictionary containing results
+st.getResult() # returns a dictionary containing results
 st.getDetailedResult(sem_no) # returns a dictionary containing details of a semester result
+st.downloadSemResult(sem_no) # writes result document as registrationno_sem_no.pdf
 
 ```
 
@@ -37,7 +38,8 @@ st.getDetailedResult(sem_no) # returns a dictionary containing details of a seme
 [ico-licence]: https://img.shields.io/pypi/l/iterapi.svg?style=for-the-badge
 [ico-format]: https://img.shields.io/pypi/format/iterapi.svg?style=for-the-badge
 [ico-status]: https://img.shields.io/pypi/status/iterapi.svg?style=for-the-badge
-[ico-build]: https://img.shields.io/travis/SubhrajitPrusty/iterapi.svg?style=for-the-badge
+[ico-build]: https://img.shields.io/github/workflow/status/SubhrajitPrusty/iterapi/Upload%20Python%20Package?style=for-the-badge
+
 
 [link-github]: https://github.com/SubhrajitPrusty/iterapi
 [link-pypi]: https://pypi.org/project/iterapi

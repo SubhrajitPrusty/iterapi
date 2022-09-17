@@ -1,31 +1,32 @@
-from setuptools import setup, find_packages
+import contextlib
+from setuptools import setup
 from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
 
+
 def readme():
-    try:
+    with contextlib.suppress(Exception):
         with open('README.md') as f:
             return f.read()
-    except:
-        pass
+
 
 setup(
     name='iterapi',
-    version='1.2.4', 
+    version='1.2.5',
     description='Python API to student portal of ITER',
 
-    long_description=readme(),  
-    long_description_content_type='text/markdown', 
+    long_description=readme(),
+    long_description_content_type='text/markdown',
 
-    url='https://github.com/SubhrajitPrusty/iterapi',  
-    author='Subhrajit Prusty',  
+    url='https://github.com/SubhrajitPrusty/iterapi',
+    author='Subhrajit Prusty',
     author_email='subhrajit1997@gmail.com',
 
     setup_requires=['setuptools>=38.6.0'],
-    
-    classifiers=[  
+
+    classifiers=[
         'Development Status :: 4 - Beta',
 
         'Intended Audience :: Developers',
@@ -39,8 +40,8 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
 
-    keywords='api ITER development', 
-    license = 'MIT',
-    packages=['iterapi'], 
-    install_requires=['requests'], 
+    keywords='api ITER development',
+    license='MIT',
+    packages=['iterapi'],
+    install_requires=['requests'],
 )

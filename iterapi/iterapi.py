@@ -7,7 +7,7 @@ class Student(object):
     Student Object containing functions to retrieve various student details
     """
 
-    DOMAIN = "http://103.112.27.37:8282"
+    DOMAIN = "http://115.240.101.71:8282"
     LOGIN_URL = DOMAIN+"/CampusPortalSOA/login"
     STUDENTINFO_URL = DOMAIN+"/CampusPortalSOA/studentinfo"
     REGID_URL = DOMAIN+"/CampusPortalSOA/studentSemester/lov"

@@ -3,7 +3,10 @@
 
 name: Upload Python Package
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'master'
 
 jobs:
   deploy:
@@ -26,4 +29,4 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
-        twine upload dist/*
+        twine upload --skip-existing dist/*

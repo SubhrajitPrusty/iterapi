@@ -6,17 +6,16 @@ Python API to Student's Campus portal of ITER
 [![Latest Version][ico-version]][link-pypi]
 [![Format][ico-format]][link-pypi]
 [![Status][ico-status]][link-pypi]
-[![Build][ico-build]][travis]
 
 ## Installation
 
+Requires Python 3.6+
+
 `pip install iterapi`
 
-or
-
-`pip3 install iterapi`
-
 ## Usage
+
+Import and use the class.
 
 Example
 
@@ -43,4 +42,3 @@ st.downloadSemResult(sem_no) # writes result document as registrationno_sem_no.p
 
 [link-github]: https://github.com/SubhrajitPrusty/iterapi
 [link-pypi]: https://pypi.org/project/iterapi
-[travis]: https://travis-ci.org/SubhrajitPrusty/iterapi

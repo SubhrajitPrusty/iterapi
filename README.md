@@ -6,7 +6,6 @@ Python API to Student's Campus portal of ITER
 [![Latest Version][ico-version]][link-pypi]
 [![Format][ico-format]][link-pypi]
 [![Status][ico-status]][link-pypi]
-[![Build][ico-build]][travis]
 
 ## Installation
 
